@@ -13,10 +13,11 @@ import lombok.ToString;
 @Builder(toBuilder = true)
 @Getter
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Address {
 
     @PositiveOrZero
+    @EqualsAndHashCode.Include
     private long id;
 
     @NotNull

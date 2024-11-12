@@ -1,4 +1,4 @@
-package com.kodequell.interfaces.rest.repository;
+package com.kodequell.infrastructure.rest.repository;
 
 import com.kodequell.domain.repository.AddressRepository;
 import com.kodequell.testsupport.IntegrationTestSupport;

@@ -6,12 +6,12 @@ import com.kodequell.infrastructure.spring.Application;
 import com.kodequell.infrastructure.spring.config.MarshallingConfig;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.mockserver.client.MockServerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -26,12 +26,13 @@ import java.util.Arrays;
 
 ;
 
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(MarshallingConfig.class)
 @Testcontainers
 @ActiveProfiles("it")
 @Sql("classpath:cleanup.sql")
 @AutoConfigureMockMvc
+@DirtiesContext
 public abstract class IntegrationTestSupport implements TestSupport {
 
     @Autowired
@@ -49,13 +50,9 @@ public abstract class IntegrationTestSupport implements TestSupport {
     protected static MockServerContainer mockServerContainer =
             new MockServerContainer(DockerImageName.parse("mockserver/mockserver:latest"));
 
-    @BeforeAll
-    static void createMockServerClient() {
-        mockServerClient = new MockServerClient(mockServerContainer.getHost(), mockServerContainer.getServerPort());
-    }
-
     @DynamicPropertySource
     static void overrideProperties(DynamicPropertyRegistry registry) {
+        mockServerClient = new MockServerClient(mockServerContainer.getHost(), mockServerContainer.getServerPort());
         registry.add("customer.api.url", mockServerContainer::getEndpoint);
     }
 
@@ -63,7 +60,6 @@ public abstract class IntegrationTestSupport implements TestSupport {
     protected void resetMockServer() {
         Arrays.stream(mockServerClient.retrieveActiveExpectations(null)).forEach(System.err::println);
         Arrays.stream(mockServerClient.retrieveRecordedRequests(null)).forEach(System.err::println);
-        mockServerClient.reset();
     }
 
     @SneakyThrows
