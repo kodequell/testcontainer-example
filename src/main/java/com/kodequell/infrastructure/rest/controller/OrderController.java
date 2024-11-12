@@ -1,4 +1,4 @@
-package com.kodequell.interfaces.rest.controller;
+package com.kodequell.infrastructure.rest.controller;
 
 import com.kodequell.application.command.CreateOrderCommand;
 import com.kodequell.application.dto.OrderCreatedDto;
