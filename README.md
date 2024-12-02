@@ -10,5 +10,5 @@ simplified microservice scenario.
 
 ### Run
 ```
-mvn clean verify
+mvn failsafe:integration-test
 ```
