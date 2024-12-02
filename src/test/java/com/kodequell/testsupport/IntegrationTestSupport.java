@@ -1,5 +1,7 @@
 package com.kodequell.testsupport;
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodequell.domain.repository.OrderRepository;
 import com.kodequell.infrastructure.spring.Application;
@@ -21,10 +23,6 @@ import org.testcontainers.containers.MockServerContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
-import java.util.Arrays;
-
-;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(MarshallingConfig.class)
@@ -57,7 +55,7 @@ public abstract class IntegrationTestSupport implements TestSupport {
     }
 
     @AfterEach
-    protected void resetMockServer() {
+    protected void printExpectations() {
         Arrays.stream(mockServerClient.retrieveActiveExpectations(null)).forEach(System.err::println);
         Arrays.stream(mockServerClient.retrieveRecordedRequests(null)).forEach(System.err::println);
     }

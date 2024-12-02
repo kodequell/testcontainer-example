@@ -13,7 +13,7 @@
 
     <groupId>com.kodequell</groupId>
     <artifactId>testcontainer-example</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <name>test-container-example</name>
     <description>Spring-Boot demo application with test containers support</description>
 
@@ -22,6 +22,7 @@
         <lombok.version>1.18.34</lombok.version>
         <testcontainers.version>1.20.3</testcontainers.version>
         <commons-lang.version>3.17.0</commons-lang.version>
+        <mockserver-netty.version>5.15.0</mockserver-netty.version>
     </properties>
 
     <dependencies>
@@ -109,7 +110,7 @@
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-netty</artifactId>
-            <version>5.15.0</version>
+            <version>${mockserver-netty.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
