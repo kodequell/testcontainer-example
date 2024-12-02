@@ -32,7 +32,7 @@ public class OrderService implements CreateOrderUseCase {
                 new IllegalStateException("Failed to resolve address for customerId: " + command.customerId()));
     }
 
-    private Function<Address, OrderId> orderMapper(CustomerId customerId) {
+    private Function<Address, OrderId> orderMapper(final CustomerId customerId) {
         return address -> {
             final var order = Order.builder().id(OrderId.generate()).customerId(customerId).address(address).build();
             orderRepository.insert(order);

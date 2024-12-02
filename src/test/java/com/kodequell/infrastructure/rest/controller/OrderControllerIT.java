@@ -39,7 +39,8 @@ class OrderControllerIT extends IntegrationTestSupport {
 
         // verify database
         assertThat(orderRepository.findAll()).singleElement()
-                .usingRecursiveComparison().ignoringFields("id.value", "address.orderId.value").isEqualTo(defaultOrder());
+                .usingRecursiveComparison().ignoringFields("id.value", "address.orderId.value")
+                .isEqualTo(defaultOrder());
     }
 
     @Test
